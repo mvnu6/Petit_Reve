@@ -1,10 +1,15 @@
-package com.example.petitrve;
+package com.example.petit_reve;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.os.Bundle;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import androidx.appcompat.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        System.out.println("hhhhhj");
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -47,6 +51,32 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, StoryActivity.class);
             startActivity(intent); // Démarrer l'activité StoryActivity
         });
+
+// Récupérer l'ImageButton
+        ImageButton menuButton = findViewById(R.id.menuButton);
+
+        // Configurer l'action du bouton pour afficher le PopupMenu
+        menuButton.setOnClickListener(v -> {
+            // Créer un PopupMenu
+            PopupMenu popupMenu = new PopupMenu(MainActivity.this, menuButton);
+
+            // Ajouter des éléments de menu directement dans le code
+            popupMenu.getMenu().add("activer le son");
+            popupMenu.getMenu().add("désactiver le son ");
+
+
+            // Définir un listener pour les éléments du menu
+            popupMenu.setOnMenuItemClickListener(item -> {
+                // Utiliser le texte de l'élément pour déterminer l'option choisie
+                String selectedOption = item.getTitle().toString();
+                Toast.makeText(MainActivity.this, selectedOption + " sélectionnée", Toast.LENGTH_SHORT).show();
+                return true;
+            });
+
+            // Afficher le menu
+            popupMenu.show();
+        });
     }
 }
+
 

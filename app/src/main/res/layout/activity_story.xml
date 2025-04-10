@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.petit_reve.StoryActivity">
+    <include
+        android:id="@+id/header"
+        layout="@layout/activity_header" />
 
     <Button
         android:id="@+id/generateStoryButton"

@@ -8,6 +8,14 @@
     tools:context=".MainActivity">
 
 
+    <include
+        android:id="@+id/header"
+        layout="@layout/activity_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <Button
         android:id="@+id/generateStoryButton"
         android:layout_width="wrap_content"
@@ -35,5 +43,5 @@
     <!-- Aligne le bouton avec le bord droit du parent -->
     <!-- Centre le bouton horizontalement dans l'espace disponible -->
     <!-- Ajoute une marge de 20dp entre le bouton 'Histoire sauvegardée' -->
-    <include layout="@layout/activity_header"></include>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
