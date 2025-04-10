@@ -7,13 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+
+    <Button
+        android:id="@+id/generateStoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Générer l'histoire"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.446" />
 
+    <Button
+        android:id="@+id/savedStoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Histoire sauvegardée"
+        app:layout_constraintTop_toBottomOf="@id/generateStoryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="20dp" />
+    <!-- Place le haut du bouton juste en dessous du bouton 'Générer l'histoire' -->
+    <!-- Aligne le bouton avec le bord gauche du parent -->
+    <!-- Aligne le bouton avec le bord droit du parent -->
+    <!-- Centre le bouton horizontalement dans l'espace disponible -->
+    <!-- Ajoute une marge de 20dp entre le bouton 'Histoire sauvegardée' -->
+    <include layout="@layout/activity_header"></include>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,9 @@
-package com.example.petit_reve;
-
+package com.example.petitrve;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -15,10 +19,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        System.out.println("hhhhhj");
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Trouver le bouton "Générer l'histoire" dans le XML
+        Button generateStoryButton = findViewById(R.id.generateStoryButton);
+
+        // Définir un OnClickListener pour le bouton
+        generateStoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un Intent pour naviguer vers FormActivity
+                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                startActivity(intent); // Démarrer FormActivity
+            }
+        });
+
+
+        // Trouver le bouton "Histoire sauvegardée" dans le XML
+        Button savedStoryButton = findViewById(R.id.savedStoryButton);
+        savedStoryButton.setOnClickListener(v -> {
+            // Créer un Intent pour naviguer vers StoryActivity
+            Intent intent = new Intent(MainActivity.this, StoryActivity.class);
+            startActivity(intent); // Démarrer l'activité StoryActivity
+        });
     }
 }
+
