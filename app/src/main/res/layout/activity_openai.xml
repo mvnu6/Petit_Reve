@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Tranche d'âge -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tranche d'âge (1–3 ans) :" />
+
+        <Spinner
+            android:id="@+id/ageSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Genre de l'enfant -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genre de l'enfant (facultatif) :" />
+
+        <Spinner
+            android:id="@+id/genderSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Type d’histoire -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type d’histoire (ex : aventure, comptine) :" />
+
+        <EditText
+            android:id="@+id/typeInput"
+            android:hint="ex : aventure, animaux..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Nom du personnage principal -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nom du héros (ex : Zoé, Milo) :" />
+
+        <EditText
+            android:id="@+id/nameInput"
+            android:hint="ex : Louna, Milo, Zoé..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Mots-clés -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mots-clés (séparés par des virgules) :" />
+
+        <EditText
+            android:id="@+id/keywordsInput"
+            android:hint="ex : nuages, étoiles, doudou..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Bouton pour générer l'histoire -->
+        <Button
+            android:id="@+id/sendBtn"
+            android:text="Générer l’histoire"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Spinner de chargement -->
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            style="?android:attr/progressBarStyle" />
+
+        <!-- Affichage de l'histoire générée -->
+        <TextView
+            android:id="@+id/responseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="L’histoire apparaîtra ici"
+            android:paddingTop="24dp" />
+    </LinearLayout>
+</ScrollView>
