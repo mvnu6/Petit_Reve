@@ -83,13 +83,5 @@
             android:visibility="gone"
             android:layout_gravity="center_horizontal"
             style="?android:attr/progressBarStyle" />
-
-        <!-- Affichage de l'histoire générée -->
-        <TextView
-            android:id="@+id/responseText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="L’histoire apparaîtra ici"
-            android:paddingTop="24dp" />
     </LinearLayout>
 </ScrollView>
