@@ -21,6 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".FormActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".StoryActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
