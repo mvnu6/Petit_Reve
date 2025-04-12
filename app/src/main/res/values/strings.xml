@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">petit_reve</string>
+    <string name="ex_3_ans">ex: 3 ans</string>
+    <string name="tranche_d_ge">Tranche d\'âge :</string>
+    <string name="type_d_histoire">Type d’histoire :</string>
+    <string name="ex_aventure_animaux">ex: aventure, animaux...</string>
+    <string name="ex_l_a_l_o">ex: Léa, Léo...</string>
+    <string-array name="age_ranges">
+        <item>1 an</item>
+        <item>2 ans</item>
+        <item>3 ans</item>
+    </string-array>
+    <string-array name="gender_options">
+        <item>Fille</item>
+        <item>Garçon</item>
+        <item>Autre</item>
+    </string-array>
 </resources>

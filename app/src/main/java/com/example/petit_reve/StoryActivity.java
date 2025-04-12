@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+
 import androidx.appcompat.widget.PopupMenu;
 
 
@@ -31,10 +31,5 @@ public class StoryActivity extends AppCompatActivity {
         // Configurer le bouton du menu
         ImageButton menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(v -> MenuActivity.showMenu(StoryActivity.this, v));
-
-        // Créer un Intent pour revenir à MainActivity
-        Intent intent = new Intent(StoryActivity.this, MainActivity.class);
-        startActivity(intent);  // Démarrer MainActivity
-        finish();  // Fermer l'activité actuelle (StoryActivity)
     }
 }

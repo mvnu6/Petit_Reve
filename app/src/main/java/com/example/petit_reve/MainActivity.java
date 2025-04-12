@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Créer un Intent pour naviguer vers FormActivity
-                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                Intent intent = new Intent(MainActivity.this, OpenAiActivity.class);
                 startActivity(intent); // Démarrer FormActivity
             }
         });
