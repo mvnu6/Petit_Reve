@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Créer un Intent pour naviguer vers FormActivity
-                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                Intent intent = new Intent(MainActivity.this, OpenAiActivity.class);
                 startActivity(intent); // Démarrer FormActivity
             }
         });
@@ -51,32 +51,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, StoryActivity.class);
             startActivity(intent); // Démarrer l'activité StoryActivity
         });
-
-// Récupérer l'ImageButton
+        // Configurer le bouton du menu
         ImageButton menuButton = findViewById(R.id.menuButton);
-
-        // Configurer l'action du bouton pour afficher le PopupMenu
-        menuButton.setOnClickListener(v -> {
-            // Créer un PopupMenu
-            PopupMenu popupMenu = new PopupMenu(MainActivity.this, menuButton);
-
-            // Ajouter des éléments de menu directement dans le code
-            popupMenu.getMenu().add("activer le son");
-            popupMenu.getMenu().add("désactiver le son ");
-
-
-            // Définir un listener pour les éléments du menu
-            popupMenu.setOnMenuItemClickListener(item -> {
-                // Utiliser le texte de l'élément pour déterminer l'option choisie
-                String selectedOption = item.getTitle().toString();
-                Toast.makeText(MainActivity.this, selectedOption + " sélectionnée", Toast.LENGTH_SHORT).show();
-                return true;
-            });
-
-            // Afficher le menu
-            popupMenu.show();
-        });
+        menuButton.setOnClickListener(v -> MenuActivity.showMenu(MainActivity.this, v));
     }
 }
-
-
