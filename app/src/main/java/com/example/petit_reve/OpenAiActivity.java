@@ -1,5 +1,6 @@
 package com.example.petit_reve;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +45,6 @@ public class OpenAiActivity extends AppCompatActivity {
         EditText nameInput = findViewById(R.id.nameInput);
         EditText keywordsInput = findViewById(R.id.keywordsInput);
         Button sendBtn = findViewById(R.id.sendBtn);
-        TextView responseText = findViewById(R.id.responseText);
         ProgressBar loadingSpinner = findViewById(R.id.loadingSpinner);
 
 
@@ -104,20 +104,24 @@ public class OpenAiActivity extends AppCompatActivity {
 
             new Thread(() -> {
                 try {
-                    System.out.println("🟢 Envoi de la requête à OpenAI...");
                     String response = aiService.getResponse(prompt);
+
+                    // Envoi de l'histoire à la nouvelle activité
+                    Intent intent = new Intent(OpenAiActivity.this, StoryActivity.class);
+                    intent.putExtra("STORY", response);
+
+                    // Démarrer la nouvelle activité avec l'histoire
+                    startActivity(intent);
+
                     runOnUiThread(() -> {
-                        responseText.setText(response);
-                        sendBtn.setEnabled(true);
                         loadingSpinner.setVisibility(View.GONE);
-                        System.out.println("✅ Réponse reçue !");
+                        sendBtn.setEnabled(true);
                     });
+
                 } catch (Exception e) {
                     runOnUiThread(() -> {
-                        responseText.setText("Erreur : " + e.getMessage());
                         sendBtn.setEnabled(true);
                         loadingSpinner.setVisibility(View.GONE);
-                        System.out.println("❌ Erreur : " + e.getMessage());
                     });
                     e.printStackTrace();
                 }

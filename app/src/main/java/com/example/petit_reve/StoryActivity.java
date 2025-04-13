@@ -1,35 +1,25 @@
 package com.example.petit_reve;
 
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.widget.PopupMenu;
-
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class StoryActivity extends AppCompatActivity {
+
+    private TextView storyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_story);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        // Configurer le bouton du menu
-        ImageButton menuButton = findViewById(R.id.menuButton);
-        menuButton.setOnClickListener(v -> MenuActivity.showMenu(StoryActivity.this, v));
+        // Lien vers le TextView où l'histoire sera affichée
+        storyTextView = findViewById(R.id.storyTextView);
+
+        // Récupérer l'histoire envoyée depuis OpenAiActivity
+        String story = getIntent().getStringExtra("STORY");
+        if (story != null) {
+            storyTextView.setText(story);
+        }
     }
 }
