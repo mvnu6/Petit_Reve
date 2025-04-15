@@ -65,32 +65,16 @@
             app:layout_constraintTop_toBottomOf="@id/typeLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Type d'histoire -->
-        <TextView
-            android:id="@+id/storyLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Type d'histoire :"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/typeInput"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <Spinner
-            android:id="@+id/storySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@id/storyLabel"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Genre de l'enfant -->
         <TextView
             android:id="@+id/genderLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Genre de l'enfant :"
+            android:text="Genre du personnage :"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/storySpinner"
+            app:layout_constraintTop_toBottomOf="@id/typeInput"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
@@ -101,25 +85,40 @@
             app:layout_constraintTop_toBottomOf="@id/genderLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
-
-
-        <!-- Personnage préféré -->
+        <!-- Type de récit -->
         <TextView
-            android:id="@+id/characterLabel"
+            android:id="@+id/storyLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Personnage préféré :"
+            android:text="Type de récit :"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/genderSpinner"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/characterInput"
+        <Spinner
+            android:id="@+id/storySpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ex : petit chat, lapin, dragon..."
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@id/characterLabel"
+            app:layout_constraintTop_toBottomOf="@id/storyLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Ajout : Type d'histoire -->
+        <TextView
+            android:id="@+id/substoryLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type d'histoire :"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/storySpinner"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/substorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/substoryLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
         <!-- Lieu -->
@@ -129,7 +128,7 @@
             android:layout_height="wrap_content"
             android:text="Lieu :"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/characterInput"
+            app:layout_constraintTop_toBottomOf="@id/substorySpinner"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
@@ -141,6 +140,26 @@
             app:layout_constraintTop_toBottomOf="@id/placeLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <!-- Personnage préféré -->
+        <TextView
+            android:id="@+id/characterLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personnage préféré :"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/placeInput"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/characterInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ex : petit chat, lapin, dragon..."
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/characterLabel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
         <!-- Mots-clés -->
         <TextView
             android:id="@+id/keywordsLabel"
@@ -148,7 +167,7 @@
             android:layout_height="wrap_content"
             android:text="Mots-clés (séparés par des virgules) :"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/placeInput"
+            app:layout_constraintTop_toBottomOf="@id/characterInput"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
