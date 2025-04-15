@@ -14,4 +14,17 @@
         <item>Garçon</item>
         <item>Fille</item>
     </string-array>
+    <string-array name="substory_options">
+        <item>🔍 Exploration</item>
+        <item>🚀 Voyage fantastique</item>
+        <item>🏞️ Aventures en pleine nature</item>
+        <item>🧙 Aventure magique</item>
+        <item>🧩 Énigmes et mystères</item>
+        <item>🐾 Animaux rigolos</item>
+        <item>🧠 Apprentissage ludique</item>
+        <item>💤 Douceur et sommeil</item>
+        <item>🚗 Actions et mouvements</item>
+        <item>🍓 Imaginaire et quotidien</item>
+        <item>🍓 Morale</item>
+    </string-array>
 </resources>

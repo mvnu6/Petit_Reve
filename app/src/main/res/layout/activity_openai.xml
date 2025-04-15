@@ -48,7 +48,7 @@
 
         <!-- Age du personnage -->
         <TextView
-            android:id="@+id/typeLabel"
+            android:id="@+id/ageLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Age du personnage :"
@@ -57,12 +57,12 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/typeInput"
+            android:id="@+id/ageInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ex : 8 ans, 13 ans, 21 ans..."
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@id/typeLabel"
+            app:layout_constraintTop_toBottomOf="@id/ageLabel"
             app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="Genre du personnage :"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/typeInput"
+            app:layout_constraintTop_toBottomOf="@id/ageInput"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
