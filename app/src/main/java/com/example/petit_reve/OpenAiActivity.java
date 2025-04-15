@@ -21,10 +21,10 @@ public class OpenAiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_openai);
 
-        Spinner ageSpinner = findViewById(R.id.ageSpinner);
+        Spinner storySpinner = findViewById(R.id.storySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.age_ranges,
+                R.array.story_options,
                 android.R.layout.simple_spinner_item
         );
 
@@ -40,7 +40,7 @@ public class OpenAiActivity extends AppCompatActivity {
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(genderAdapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ageSpinner.setAdapter(adapter);
+        storySpinner.setAdapter(adapter);
         EditText typeInput = findViewById(R.id.typeInput);
         EditText nameInput = findViewById(R.id.nameInput);
         EditText keywordsInput = findViewById(R.id.keywordsInput);
@@ -50,7 +50,7 @@ public class OpenAiActivity extends AppCompatActivity {
 
 
         sendBtn.setOnClickListener(v -> {
-            String age = ageSpinner.getSelectedItem().toString();
+            String story = storySpinner.getSelectedItem().toString();
             String type = typeInput.getText().toString();
             String name = nameInput.getText().toString();
             String gender = genderSpinner.getSelectedItem().toString();
@@ -67,7 +67,7 @@ public class OpenAiActivity extends AppCompatActivity {
                     "Voici les informations fournies par l'utilisateur :\n" +
                     "\n" +
                     "- 🧒 **Nom du héros :** " + name + "\n" +
-                    "- 🎂 **Âge de l'enfant :** " + age + "\n" +
+                    "- 🎂 **Type d'histoire :** " + story + "\n" +
                     "- 💬 **Type de récit :** " + type + "\n" +
                     "-    **genre de l'enfant:**" + gender +"\n" +
                     "- 🌍 **Lieu magique :** forêt enchantée (par défaut)\n" +
