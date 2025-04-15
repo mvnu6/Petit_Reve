@@ -3,16 +3,16 @@ package com.example.petit_reve;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class OpenAiActivity extends AppCompatActivity {
-
 
     private OpenAiService aiService = new OpenAiService();
 
@@ -22,34 +22,9 @@ public class OpenAiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_openai);
 
         Spinner storySpinner = findViewById(R.id.storySpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.story_options,
-                android.R.layout.simple_spinner_item
-        );
-
         Spinner substorySpinner = findViewById(R.id.substorySpinner);
-        ArrayAdapter<CharSequence> substoryadapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.substory_options,
-                android.R.layout.simple_spinner_item
-        );
-
         Spinner genderSpinner = findViewById(R.id.genderSpinner);
-        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.gender_options,
-                android.R.layout.simple_spinner_item
-        );
 
-        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genderSpinner.setAdapter(genderAdapter);
-        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genderSpinner.setAdapter(genderAdapter);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        storySpinner.setAdapter(adapter);
-        substoryadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        substorySpinner.setAdapter(substoryadapter);
         EditText ageInput = findViewById(R.id.ageInput);
         EditText nameInput = findViewById(R.id.nameInput);
         EditText keywordsInput = findViewById(R.id.keywordsInput);
@@ -58,8 +33,53 @@ public class OpenAiActivity extends AppCompatActivity {
         Button sendBtn = findViewById(R.id.sendBtn);
         ProgressBar loadingSpinner = findViewById(R.id.loadingSpinner);
 
+        // Adapter principal pour le type de récit
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.story_options,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        storySpinner.setAdapter(adapter);
 
+        // Adapter pour le genre
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.gender_options,
+                android.R.layout.simple_spinner_item
+        );
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(genderAdapter);
 
+        // Mise à jour dynamique du sous-type d’histoire en fonction du type de récit
+        storySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedStoryType = parent.getItemAtPosition(position).toString();
+                int substoryArrayRes;
+
+                if (selectedStoryType.equals("Aventure")) {
+                    substoryArrayRes = R.array.substory_aventure_options;
+                } else if (selectedStoryType.equals("Comptine")) {
+                    substoryArrayRes = R.array.substory_comptine_options;
+                } else {
+                    substoryArrayRes = R.array.substory_aventure_options;
+                }
+
+                ArrayAdapter<CharSequence> substoryAdapter = ArrayAdapter.createFromResource(
+                        OpenAiActivity.this,
+                        substoryArrayRes,
+                        android.R.layout.simple_spinner_item
+                );
+                substoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                substorySpinner.setAdapter(substoryAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        // Génération de l’histoire
         sendBtn.setOnClickListener(v -> {
             String story = storySpinner.getSelectedItem().toString();
             String substory = substorySpinner.getSelectedItem().toString();
@@ -112,26 +132,21 @@ public class OpenAiActivity extends AppCompatActivity {
                     "\n" +
                     "Tu dois TOUJOURS produire une **histoire douce, calme et rassurante**, adaptée aux enfants en crèche.";
 
-
-            sendBtn.setEnabled(false); // désactive le bouton
-            loadingSpinner.setVisibility(View.VISIBLE); // affiche la roue de chargement
+            sendBtn.setEnabled(false);
+            loadingSpinner.setVisibility(View.VISIBLE);
 
             new Thread(() -> {
                 try {
                     String response = aiService.getResponse(prompt);
 
-                    // Envoi de l'histoire à la nouvelle activité
                     Intent intent = new Intent(OpenAiActivity.this, StoryActivity.class);
                     intent.putExtra("STORY", response);
-
-                    // Démarrer la nouvelle activité avec l'histoire
                     startActivity(intent);
 
                     runOnUiThread(() -> {
                         loadingSpinner.setVisibility(View.GONE);
                         sendBtn.setEnabled(true);
                     });
-
                 } catch (Exception e) {
                     runOnUiThread(() -> {
                         sendBtn.setEnabled(true);

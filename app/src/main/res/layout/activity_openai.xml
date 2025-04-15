@@ -66,7 +66,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
-
         <!-- Genre de l'enfant -->
         <TextView
             android:id="@+id/genderLabel"
