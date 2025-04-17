@@ -1,26 +1,25 @@
-public class OpenAiService {
+package com.example.petit_reve;
 
-    private OpenAIClient client;
+import com.openai.client.OpenAIClient;
+import com.openai.client.okhttp.OpenAIOkHttpClient;
+import com.openai.models.ChatModel;
+import com.openai.models.chat.completions.ChatCompletion;
+import com.openai.models.chat.completions.ChatCompletionCreateParams;
 
-    public OpenAiService(String apiKey) {
-        this.client = OpenAIClient.builder()
-                .apiKey(apiKey)
-                .build();
-    }
+public class OpenAIService {  // Missing class name and incorrect class declaration
 
     public String getResponse(String prompt) {
-        // Créer les paramètres de la requête avec le prompt
+        OpenAIClient client = OpenAIOkHttpClient.builder()
+                .apiKey(BuildConfig.OPENAI_API_KEY)
+                .build();
+
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
                 .addUserMessage(prompt)
                 .model(ChatModel.GPT_3_5_TURBO)
                 .build();
 
-        // Faire la requête à OpenAI et récupérer la réponse
         ChatCompletion completion = client.chat().completions().create(params);
-        String generatedText = completion.choices().get(0).message().content().orElse("Pas de réponse");
-
-        // Appliquer des filtres à la réponse générée
-        return filterResponse(generatedText);
+        return filterResponse(completion.choices().get(0).message().content().orElse("Pas de réponse"));  // Added filterResponse call
     }
 
     /**
@@ -53,7 +52,6 @@ public class OpenAiService {
                 "connasse", "clochard", "bordel", "salaud", "putain", "putes", "pédé", "gouine", "enculé",
                 "sucer", "cul", "foutre", "nique", "ta mère", "pute de merde", "casseur",
                 "merdeux", "c'est de la merde", "connasse", "violence verbale", "racaille", "trou du cul", "la merde", "gros"
-
         };
 
         // Vérifier si la réponse contient des mots inappropriés
@@ -86,7 +84,7 @@ public class OpenAiService {
 
         boolean containsAllowedTopic = false;
         for (String topic : allowedTopics) {
-            if (response.toLowerCase().contains(topic)) {
+            if (response.toLowerCase().contains(topic.toLowerCase())) { // Added toLowerCase() for topic
                 containsAllowedTopic = true;
                 break;
             }
@@ -135,25 +133,23 @@ public class OpenAiService {
                 return "L'humour utilisé n'est pas adapté pour un jeune public.";
             }
         }
-        //Vérification de la répétition excessive pour permettre que l'histoire soit pas chiante???
-       // String[] commonWords = {"chat", "forêt", "magie"};
-        //for (String word : commonWords) {
-           // if (countOccurrences(response, word) > 3) {
-           //     return "L'histoire semble un peu répétitive, essayons quelque chose de plus varié.";
-           // }
-      //  }
 
-        //Vérification des émotions exprimées dans l'histoire
+        // Commented out code for word count check - left for reference
+        /*
+        String[] commonWords = {"chat", "forêt", "magie"};
+        for (String word : commonWords) {
+            if (countOccurrences(response, word) > 3) {
+                return "L'histoire semble un peu répétitive, essayons quelque chose de plus varié.";
+            }
+        }
+        */
+
+        // Vérification des émotions exprimées dans l'histoire
         String[] negativeEmotions = {"triste", "colère", "peur", "mort", "agonie"};
         for (String word : negativeEmotions) {
             if (response.toLowerCase().contains(word.toLowerCase())) {
                 return "L'histoire ne doit pas contenir d'émotions négatives ou inquiétantes.";
             }
-        }
-
-        // Limiter la longueur de la réponse à un nombre raisonnable de caractères
-        if (response.length() > 1000) {
-            response = response.substring(0, 1000) + "...";
         }
 
 
@@ -179,5 +175,20 @@ public class OpenAiService {
             }
         }
         return true; // Si aucune vérification n'échoue, la réponse est considérée comme appropriée
+    }
+
+    // Added method that was referenced but missing
+    private int countOccurrences(String text, String word) {
+        int count = 0;
+        String lowerText = text.toLowerCase();
+        String lowerWord = word.toLowerCase();
+        int index = lowerText.indexOf(lowerWord);
+
+        while (index != -1) {
+            count++;
+            index = lowerText.indexOf(lowerWord, index + lowerWord.length());
+        }
+
+        return count;
     }
 }

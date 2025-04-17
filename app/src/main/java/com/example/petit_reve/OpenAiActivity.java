@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 public class OpenAiActivity extends AppCompatActivity {
 
 
-    private OpenAiService aiService = new OpenAiService();
+    private OpenAIService aiService = new OpenAIService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
