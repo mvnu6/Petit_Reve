@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
 public class StoryDetailActivity extends AppCompatActivity {
 
@@ -29,13 +31,16 @@ public class StoryDetailActivity extends AppCompatActivity {
     // Méthode pour charger le contenu d'une histoire depuis le fichier
     private void loadStoryDetails(String storyTitle) {
         try {
+            // Utilisation de InputStreamReader avec UTF-8 pour gérer les caractères spéciaux
             FileInputStream fis = openFileInput(storyTitle + ".txt");
-            int character;
+            InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
             StringBuilder storyContent = new StringBuilder();
-            while ((character = fis.read()) != -1) {
-                storyContent.append((char) character);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                storyContent.append(line).append("\n");
             }
-            fis.close();
+            bufferedReader.close();
             storyDetailTextView.setText(storyContent.toString());
         } catch (IOException e) {
             e.printStackTrace();

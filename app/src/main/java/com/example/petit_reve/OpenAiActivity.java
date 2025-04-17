@@ -1,5 +1,6 @@
 package com.example.petit_reve;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +13,26 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class OpenAiActivity extends AppCompatActivity {
 
     private OpenAIService aiService = new OpenAIService();
+
+    public void saveStoryToFile(String storyTitle, String storyContent) {
+        try {
+            // Utilisation de l'encodage UTF-8 pour le nom de fichier
+            String fileName = storyTitle + ".txt";  // Par exemple: "Mon histoire spéciale.txt"
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
+            writer.write(storyContent);  // Enregistrer le contenu de l'histoire
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

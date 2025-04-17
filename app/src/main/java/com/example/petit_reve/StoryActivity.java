@@ -5,8 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.widget.ScrollView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -156,6 +161,24 @@ public class StoryActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'histoire", Toast.LENGTH_SHORT).show();
         }
+    }
+    // Exemple de méthode pour lire le contenu d'un fichier et afficher les accents correctement
+    private String readStoryFromFile(String storyTitle) {
+        StringBuilder story = new StringBuilder();
+        try {
+            // Assurez-vous que l'encodage est bien en UTF-8
+            FileInputStream fis = openFileInput(storyTitle + ".txt");  // Utiliser le nom du fichier avec des accents
+            InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                story.append(line).append("\n");
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return story.toString();
     }
 
 
