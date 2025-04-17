@@ -7,14 +7,15 @@
     android:background="@color/pastel_background"
     tools:context=".StoryActivity">
 
+    <!-- Toolbar with centered title -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="16dp"
         android:background="@color/pastel_primary"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,9 +25,9 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
-
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Story Image -->
     <ImageView
         android:id="@+id/story_image"
         android:layout_width="0dp"
@@ -37,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- CardView to display the story content -->
     <androidx.cardview.widget.CardView
         android:id="@+id/story_card"
         android:layout_width="0dp"
@@ -83,6 +85,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Bottom Action Panel (Buttons) -->
     <LinearLayout
         android:id="@+id/bottom_action_panel"
         android:layout_width="match_parent"
@@ -94,18 +97,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Back Button -->
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
             android:text="Retour"
             android:textAllCaps="false"
             android:textColor="@color/text_on_button"
-            android:layout_marginEnd="8dp"
             android:textSize="13sp"
-            android:paddingStart="16dp"/>
+            android:layout_gravity="center"/>
 
+        <!-- Previous Button -->
         <Button
             android:id="@+id/prev_button"
             android:layout_width="wrap_content"
@@ -115,8 +119,9 @@
             android:textColor="@color/text_on_button"
             android:layout_marginEnd="8dp"
             android:textSize="13sp"
-            android:paddingStart="16dp"/>
+            android:layout_gravity="center"/>
 
+        <!-- Next Button -->
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
@@ -125,8 +130,9 @@
             android:textAllCaps="false"
             android:textColor="@color/text_on_button"
             android:textSize="13sp"
-            android:paddingStart="16dp"/>
+            android:layout_gravity="center"/>
 
+        <!-- Save Button -->
         <Button
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
@@ -135,7 +141,8 @@
             android:textColor="@android:color/white"
             android:background="@color/pastel_primary"
             android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
