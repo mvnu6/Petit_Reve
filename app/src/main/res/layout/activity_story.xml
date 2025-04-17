@@ -7,36 +7,29 @@
     android:background="@color/pastel_background"
     tools:context=".StoryActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- Inclure le header contenant le menu -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/activity_header"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="16dp"
-        android:background="@color/pastel_primary"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="55dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Petit Rêve"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </androidx.appcompat.widget.Toolbar>
-
+    <!-- Image de l'histoire -->
     <ImageView
         android:id="@+id/story_image"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
         android:contentDescription="Image d'illustration pour l'histoire"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- CardView contenant l'histoire -->
     <androidx.cardview.widget.CardView
         android:id="@+id/story_card"
         android:layout_width="0dp"
@@ -83,6 +76,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Panel d'actions en bas -->
     <LinearLayout
         android:id="@+id/bottom_action_panel"
         android:layout_width="match_parent"

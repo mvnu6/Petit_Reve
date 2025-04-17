@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,7 +47,7 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
-
+        ImageView logoButton = findViewById(R.id.logoImage);  // Récupérer l'ID du logo dans le header
         // Initialiser les vues
         storyTitleTextView = findViewById(R.id.story_title);
         storyContentTextView = findViewById(R.id.story_content);
@@ -59,6 +60,15 @@ public class StoryActivity extends AppCompatActivity {
 
         nextButton.setEnabled(false);
         prevButton.setEnabled(false);
+
+        // Ajouter le bouton du menu à partir du header inclus
+        ImageButton menuButton = findViewById(R.id.menuButton); // Assurez-vous que l'id correspond à celui du bouton dans activity_header.xml
+
+        // Définir l'action du bouton de menu
+        menuButton.setOnClickListener(v -> {
+            // Afficher le menu
+            MenuActivity.showMenu(StoryActivity.this, v); // Appel à la méthode showMenu de MenuActivity pour afficher le menu
+        });
 
         // Récupérer l'histoire de l'intent
         String storyText = getIntent().getStringExtra("STORY");
@@ -81,7 +91,11 @@ public class StoryActivity extends AppCompatActivity {
 
         // Configurer les boutons
         backButton.setOnClickListener(v -> finish());  // Retourner à l'activité précédente
-
+        logoButton.setOnClickListener(v -> {
+            // Créer un Intent pour ouvrir l'activité principale (MainActivity)
+            Intent intent = new Intent(StoryActivity.this, MainActivity.class);
+            startActivity(intent);  // Démarrer l'activité principale
+        });
         nextButton.setOnClickListener(v -> {
             if (currentParagraphIndex < storyParagraphs.length - 1) {
                 currentParagraphIndex++;

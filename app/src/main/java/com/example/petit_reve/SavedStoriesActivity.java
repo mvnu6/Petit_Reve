@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.app.AlertDialog;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -63,6 +65,25 @@ public class SavedStoriesActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(SavedStoriesActivity.this, "Veuillez sélectionner une histoire", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Ajouter le bouton du menu à partir du header inclus
+        ImageButton menuButton = findViewById(R.id.menuButton); // Assurez-vous que l'id correspond à celui du bouton dans activity_header.xml
+
+        // Définir l'action du bouton de menu
+        menuButton.setOnClickListener(v -> {
+            // Afficher le menu
+            MenuActivity.showMenu(SavedStoriesActivity.this, v); // Appel à la méthode showMenu de MenuActivity pour afficher le menu
+        });
+
+        // Ajouter le logo pour redirection vers MainActivity
+        ImageView logoButton = findViewById(R.id.logoImage); // Récupérer l'ID du logo dans le header
+
+        // Définir l'action du logo pour rediriger vers l'activité principale
+        logoButton.setOnClickListener(v -> {
+            // Créer un Intent pour ouvrir l'activité principale (MainActivity)
+            Intent intent = new Intent(SavedStoriesActivity.this, MainActivity.class);
+            startActivity(intent);  // Démarrer l'activité principale
         });
     }
 
