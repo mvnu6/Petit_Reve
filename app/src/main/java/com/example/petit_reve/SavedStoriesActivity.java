@@ -116,4 +116,16 @@ public class SavedStoriesActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent musicIntent = new Intent(this, MusicService.class);
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, MusicService.class));
+    }
 }

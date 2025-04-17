@@ -115,4 +115,17 @@ public class StoryActivity extends AppCompatActivity {
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'histoire", Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent musicIntent = new Intent(this, MusicService.class);
+        musicIntent.putExtra("MUSIC_FILE", R.raw.musique_aventure); // Remplacez par votre fichier
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, MusicService.class));
+    }
 }

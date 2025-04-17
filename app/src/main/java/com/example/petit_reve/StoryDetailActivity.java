@@ -1,5 +1,6 @@
 package com.example.petit_reve;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -46,5 +47,19 @@ public class StoryDetailActivity extends AppCompatActivity {
             e.printStackTrace();
             storyDetailTextView.setText("Erreur lors du chargement de l'histoire.");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent musicIntent = new Intent(this, MusicService.class);
+        musicIntent.putExtra("MUSIC_FILE", R.raw.musique_aventure); // Remplacez par votre fichier
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, MusicService.class));
     }
 }

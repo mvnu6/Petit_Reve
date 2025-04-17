@@ -55,4 +55,16 @@ public class MainActivity extends AppCompatActivity {
         ImageButton menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(v -> MenuActivity.showMenu(MainActivity.this, v));
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent musicIntent = new Intent(this, MusicService.class);
+        startService(musicIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 }
