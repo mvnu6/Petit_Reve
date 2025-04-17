@@ -40,10 +40,6 @@ public class SavedStoriesActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         storySelector.setAdapter(adapter);
 
-        // Charger les histoires dans la ListView
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, savedStories);
-        savedStoriesListView.setAdapter(listAdapter);
-
         // Lire l'histoire sélectionnée
         readButton.setOnClickListener(v -> {
             String selectedStory = (String) storySelector.getSelectedItem();
@@ -83,9 +79,9 @@ public class SavedStoriesActivity extends AppCompatActivity {
 
     // Afficher les détails d'une histoire lorsqu'elle est sélectionnée
     private void showStoryDetails(String storyTitle) {
-        Intent intent = new Intent(SavedStoriesActivity.this, StoryDetailActivity.class);
-        intent.putExtra("STORY_TITLE", storyTitle);
-        startActivity(intent);
+        Intent intent = new Intent(SavedStoriesActivity.this, StoryActivity.class);
+        intent.putExtra("STORY_TITLE", storyTitle);  // Passage du titre de l'histoire
+        startActivity(intent);  // Lancer StoryActivity
     }
 
     // Afficher un dialogue de confirmation avant de supprimer l'histoire
