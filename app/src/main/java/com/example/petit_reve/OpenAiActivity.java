@@ -3,13 +3,17 @@ package com.example.petit_reve;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,25 +24,14 @@ import java.io.OutputStreamWriter;
 public class OpenAiActivity extends AppCompatActivity {
 
     private OpenAIService aiService = new OpenAIService();
-
-    public void saveStoryToFile(String storyTitle, String storyContent) {
-        try {
-            // Utilisation de l'encodage UTF-8 pour le nom de fichier
-            String fileName = storyTitle + ".txt";  // Par exemple: "Mon histoire spéciale.txt"
-            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-            OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
-            writer.write(storyContent);  // Enregistrer le contenu de l'histoire
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_openai);
+        setContentView(R.layout.activity_openai);  // Assurez-vous que votre activité est bien liée au bon XML
 
+        // Initialisation des éléments de l'interface
         Spinner storySpinner = findViewById(R.id.storySpinner);
         Spinner substorySpinner = findViewById(R.id.substorySpinner);
         Spinner genderSpinner = findViewById(R.id.genderSpinner);
@@ -50,6 +43,25 @@ public class OpenAiActivity extends AppCompatActivity {
         EditText characterInput = findViewById(R.id.characterInput);
         Button sendBtn = findViewById(R.id.sendBtn);
         ProgressBar loadingSpinner = findViewById(R.id.loadingSpinner);
+
+        // Récupérer le bouton de menu dans le header inclus
+        ImageButton menuButton = findViewById(R.id.menuButton);  // Assurez-vous que l'id correspond à celui du bouton dans activity_header.xml
+
+        // Définir l'action du bouton de menu
+        menuButton.setOnClickListener(v -> {
+            // Afficher le menu
+            MenuActivity.showMenu(OpenAiActivity.this, v); // Appel à la méthode showMenu de MenuActivity pour afficher le menu
+        });
+
+        // Ajouter le logo pour redirection vers MainActivity
+        ImageView logoButton = findViewById(R.id.logoImage); // Récupérer l'ID du logo dans le header
+
+        // Définir l'action du logo pour rediriger vers l'activité principale
+        logoButton.setOnClickListener(v -> {
+            // Créer un Intent pour ouvrir l'activité principale (MainActivity)
+            Intent intent = new Intent(OpenAiActivity.this, MainActivity.class);
+            startActivity(intent);  // Démarrer l'activité principale
+        });
 
         // Adapter principal pour le type de récit
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -177,5 +189,19 @@ public class OpenAiActivity extends AppCompatActivity {
                 }
             }).start();
         });
+    }
+
+    // Méthode pour sauvegarder l'histoire dans un fichier local
+    public void saveStoryToFile(String storyTitle, String storyContent) {
+        try {
+            // Utilisation de l'encodage UTF-8 pour le nom de fichier
+            String fileName = storyTitle + ".txt";  // Par exemple: "Mon histoire spéciale.txt"
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8");
+            writer.write(storyContent);  // Enregistrer le contenu de l'histoire
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
