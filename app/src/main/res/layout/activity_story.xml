@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,16 +7,25 @@
     android:background="@color/pastel_background"
     tools:context=".StoryActivity">
 
-    <!-- Inclure le header avec une largeur et hauteur explicitement définies -->
-    <include
-        android:id="@+id/header"
-        layout="@layout/activity_header"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"/>
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="16dp"
+        android:background="@color/pastel_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Petit Rêve"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/story_image"
@@ -23,7 +33,7 @@
         android:layout_height="150dp"
         android:scaleType="centerCrop"
         android:contentDescription="Image d'illustration pour l'histoire"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -83,6 +93,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Retour"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_button"
+            android:layout_marginEnd="8dp"
+            android:textSize="13sp"
+            android:paddingStart="16dp"/>
+
+        <Button
+            android:id="@+id/prev_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Précédent"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_button"
+            android:layout_marginEnd="8dp"
+            android:textSize="13sp"
+            android:paddingStart="16dp"/>
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suivant"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_button"
+            android:textSize="13sp"
+            android:paddingStart="16dp"/>
 
         <Button
             android:id="@+id/save_button"
