@@ -7,25 +7,14 @@
     android:background="@color/pastel_background"
     tools:context=".StoryActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="16dp"
-        android:background="@color/pastel_primary"
+    <include
+        android:id="@+id/header"
+        layout="@layout/activity_header"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Petit Rêve"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
-    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/story_image"
@@ -33,7 +22,7 @@
         android:layout_height="150dp"
         android:scaleType="centerCrop"
         android:contentDescription="Image d'illustration pour l'histoire"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -106,16 +95,14 @@
             android:paddingStart="16dp"/>
 
         <Button
-            android:id="@+id/favorite_button"
-            android:layout_width="0dp"
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Favoris"
-            android:textAllCaps="false"
-            android:background="@drawable/button_tertiary"
-            android:textColor="@color/text_on_button"
-            android:layout_marginEnd="8dp"
-            android:paddingStart="16dp"/>
+            android:text="Enregistrer"
+            android:textColor="@android:color/white"
+            android:background="@color/pastel_primary"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"/>
 
         <Button
             android:id="@+id/share_button"

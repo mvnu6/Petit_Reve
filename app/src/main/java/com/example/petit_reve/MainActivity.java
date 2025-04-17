@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Trouver le bouton "Histoire sauvegardée" dans le XML
-        Button savedStoryButton = findViewById(R.id.savedStoryButton);
+        Button savedStoryButton = findViewById(R.id.view_saved_stories_button);
         savedStoryButton.setOnClickListener(v -> {
             // Créer un Intent pour naviguer vers StoryActivity
-            Intent intent = new Intent(MainActivity.this, StoryActivity.class);
+            Intent intent = new Intent(MainActivity.this, SavedStoriesActivity.class);
             startActivity(intent); // Démarrer l'activité StoryActivity
         });
         // Configurer le bouton du menu

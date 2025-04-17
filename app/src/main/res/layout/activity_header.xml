@@ -27,6 +27,8 @@
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/logoImage"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="8dp"/> <!-- Correction : Utilisation de android:layout_marginStart ici -->
 
     <!-- Bouton de menu en haut à droite -->

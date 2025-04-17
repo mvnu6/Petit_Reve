@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import android.widget.ScrollView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,8 +20,7 @@ public class StoryActivity extends AppCompatActivity {
     private TextView storyContentTextView;
     private Button backButton;
     private Button shareButton;
-    private Button favoriteButton;
-    private boolean isFavorite = false;
+    private Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class StoryActivity extends AppCompatActivity {
         storyContentTextView = findViewById(R.id.story_content);
         backButton = findViewById(R.id.back_button);
         shareButton = findViewById(R.id.share_button);
-        favoriteButton = findViewById(R.id.favorite_button);
+        saveButton = findViewById(R.id.save_button);
 
         // Récupérer l'histoire de l'intent
         String storyText = getIntent().getStringExtra("STORY");
@@ -62,6 +63,18 @@ public class StoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 shareStory(storyText);
+            }
+        });
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = storyTitleTextView.getText().toString();
+                String content = storyContentTextView.getText().toString();
+
+                // Enregistre l'histoire localement
+                saveStoryLocally(title, content);
             }
         });
 
@@ -127,7 +140,23 @@ public class StoryActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(shareIntent, "Partager l'histoire via"));
     }
 
-    /**
-     * Change l'état du bouton favori
-     */
+    private void saveStoryLocally(String title, String content) {
+        String filename = title + ".txt"; // Utilise le titre de l'histoire pour le nom du fichier
+        String fileContents = "Titre: " + title + "\n\n" + content;
+
+        try {
+            // Ouvre un fichier pour écrire dans le stockage interne
+            FileOutputStream fos = openFileOutput(filename, MODE_PRIVATE);
+            fos.write(fileContents.getBytes());
+            fos.close();
+
+            // Affiche un message confirmant l'enregistrement
+            Toast.makeText(this, "Histoire enregistrée localement", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur lors de l'enregistrement de l'histoire", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
