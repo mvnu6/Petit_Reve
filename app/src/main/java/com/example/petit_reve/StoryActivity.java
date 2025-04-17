@@ -3,6 +3,7 @@ package com.example.petit_reve;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -213,8 +214,29 @@ public class StoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Récupérer la variable "story" depuis l'intent
+        String storyType = getIntent().getStringExtra("STORY_TYPE");
+        Log.d("StoryActivity", "Valeur de storyType : " + storyType);
+
+        // Définir les tableaux de musiques
+        String[] aventureMusics = {"aventure1", "aventure2", "aventure3", "aventure4"};
+        String[] comptineMusics = {"comptine1", "comptine2", "comptine3", "comptine4", "comptine5"};
+
+        // Sélectionner une musique aléatoire en fonction du type de récit
+        String selectedMusic;
+        if ("Aventure".equalsIgnoreCase(storyType)) {
+            selectedMusic = aventureMusics[new Random().nextInt(aventureMusics.length)];
+        } else {
+            selectedMusic = comptineMusics[new Random().nextInt(comptineMusics.length)];
+        }
+
+        // Obtenir l'ID de la ressource pour la musique sélectionnée
+        int musicResId = getResources().getIdentifier(selectedMusic, "raw", getPackageName());
+
+        // Démarrer le service de musique avec la musique sélectionnée
         Intent musicIntent = new Intent(this, MusicService.class);
-        musicIntent.putExtra("MUSIC_FILE", R.raw.musique_aventure); // Remplacez par votre fichier
+        musicIntent.putExtra("MUSIC_FILE", musicResId);
         startService(musicIntent);
     }
 

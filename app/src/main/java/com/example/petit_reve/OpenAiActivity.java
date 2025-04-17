@@ -157,9 +157,11 @@ public class OpenAiActivity extends AppCompatActivity {
                 try {
                     String response = aiService.getResponse(prompt);
 
+
                     // Envoi de l'histoire à la nouvelle activité
                     Intent intent = new Intent(OpenAiActivity.this, StoryActivity.class);
                     intent.putExtra("STORY", response);
+                    intent.putExtra("STORY_TYPE", story); // Ajout de la valeur de story
 
                     // Démarrer la nouvelle activité avec l'histoire
                     startActivity(intent);
