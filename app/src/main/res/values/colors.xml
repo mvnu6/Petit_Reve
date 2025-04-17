@@ -3,4 +3,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="menthePastel">#A8E6CF</color>
+    <color name="pastel_primary">#9FA8DA</color>
+    <color name="pastel_primary_dark">#7986CB</color>
+    <color name="pastel_accent">#FFD180</color>
+    <color name="pastel_background">#F5F7FF</color>
+
+    <!-- Couleurs de texte -->
+    <color name="text_primary">#37474F</color>
+    <color name="text_secondary">#546E7A</color>
+    <color name="text_hint">#B0BEC5</color>
+    <color name="text_on_button">#FFFFFF</color>
+
+    <!-- Couleurs des boutons -->
+    <color name="button_primary">#81C784</color>
+    <color name="button_secondary">#64B5F6</color>
+    <color name="button_tertiary">#FFB74D</color>
+
+
 </resources>
