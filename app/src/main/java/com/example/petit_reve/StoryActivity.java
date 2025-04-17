@@ -5,26 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import android.widget.ScrollView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 public class StoryActivity extends AppCompatActivity {
 
     private TextView storyTitleTextView;
     private TextView storyContentTextView;
-    private Button backButton;
-    private Button shareButton;
     private Button saveButton;
 
     @Override
@@ -35,8 +26,6 @@ public class StoryActivity extends AppCompatActivity {
         // Initialiser les vues
         storyTitleTextView = findViewById(R.id.story_title);
         storyContentTextView = findViewById(R.id.story_content);
-        backButton = findViewById(R.id.back_button);
-        shareButton = findViewById(R.id.share_button);
         saveButton = findViewById(R.id.save_button);
 
         // Récupérer l'histoire de l'intent
@@ -56,34 +45,14 @@ public class StoryActivity extends AppCompatActivity {
             storyContentTextView.setText("Désolé, aucune histoire n'a pu être générée. Veuillez réessayer.");
         }
 
-        // Configurer les boutons
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Retourner à l'activité précédente
-            }
+        // Configurer le bouton de sauvegarde
+        saveButton.setOnClickListener(v -> {
+            String title = storyTitleTextView.getText().toString();
+            String content = storyContentTextView.getText().toString();
+
+            // Enregistre l'histoire localement
+            saveStoryLocally(title, content);
         });
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareStory(storyText);
-            }
-        });
-
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = storyTitleTextView.getText().toString();
-                String content = storyContentTextView.getText().toString();
-
-                // Enregistre l'histoire localement
-                saveStoryLocally(title, content);
-            }
-        });
-
-
     }
 
     /**
@@ -124,27 +93,11 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Partage l'histoire via les applications de partage disponibles
+     * Enregistre l'histoire localement
      *
-     * @param story le texte de l'histoire à partager
+     * @param title   Le titre de l'histoire
+     * @param content Le contenu de l'histoire
      */
-    private void shareStory(String story) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-
-        String title = "Histoire personnalisée de Petit Rêve";
-        String shareText = story;
-
-        if (storyTitleTextView.getText() != null && !storyTitleTextView.getText().toString().isEmpty()) {
-            title = storyTitleTextView.getText().toString();
-        }
-
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-
-        startActivity(Intent.createChooser(shareIntent, "Partager l'histoire via"));
-    }
-
     private void saveStoryLocally(String title, String content) {
         String filename = title + ".txt"; // Utilise le titre de l'histoire pour le nom du fichier
         String fileContents = "Titre: " + title + "\n\n" + content;
@@ -162,24 +115,4 @@ public class StoryActivity extends AppCompatActivity {
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'histoire", Toast.LENGTH_SHORT).show();
         }
     }
-    // Exemple de méthode pour lire le contenu d'un fichier et afficher les accents correctement
-    private String readStoryFromFile(String storyTitle) {
-        StringBuilder story = new StringBuilder();
-        try {
-            // Assurez-vous que l'encodage est bien en UTF-8
-            FileInputStream fis = openFileInput(storyTitle + ".txt");  // Utiliser le nom du fichier avec des accents
-            InputStreamReader reader = new InputStreamReader(fis, "UTF-8");
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                story.append(line).append("\n");
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return story.toString();
-    }
-
-
 }
