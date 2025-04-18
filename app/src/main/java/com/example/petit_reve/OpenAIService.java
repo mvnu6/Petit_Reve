@@ -1,5 +1,7 @@
 package com.example.petit_reve;
 
+import android.util.Log;
+
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.models.ChatModel;
@@ -25,40 +27,54 @@ public class OpenAIService {  // Missing class name and incorrect class declarat
     /**
      * Cette méthode filtre les réponses générées pour s'assurer qu'elles respectent les critères.
      */
+// Nettoyage et séparation du texte en mots distincts
+    public String[] nettoyerEtDiviserTexte(String texte) {
+        // Remplacer les caractères spéciaux (ponctuation) pour éviter les faux positifs
+        texte = texte.replaceAll("[^a-zA-Z0-9 ]", ""); // Enlever la ponctuation
+        // Convertir le texte en minuscules pour comparaison sans tenir compte de la casse
+        texte = texte.toLowerCase();
+        // Diviser le texte en mots distincts
+        return texte.split("\\s+");
+    }
     private String filterResponse(String response) {
+        String[] motsDuTexte = nettoyerEtDiviserTexte(response); // Diviser le texte en mots
+        Log.d("$$$$$$$$$$",response);
+
+
         // Liste de mots/clés à éviter (NFT, crypto, contenu inapproprié, etc.)
         String[] inappropriateWords = {
-                "NFT", "crypto", "blockchain", "bitcoin", "cryptomonnaie", "adultes", "violence",
+                "NFT", "crypto", "blockchain", "bitcoin", "cryptomonnaie", "violence",
                 "politique", "guerre", "argent", "sexuel", "porno", "adultère", "racisme", "xénophobie",
                 "insultes", "guerre", "terrorisme", "bombe", "arme", "meurtre", "assassinat", "suicide",
                 "drogue", "alcool", "tabac", "prostitution", "drogué", "viol", "agression", "harcèlement",
-                "nazi", "extrême droite", "extrême gauche", "dictature", "corruption", "escroquerie",
+                "nazi", "dictature", "corruption", "escroquerie",
                 "escroc", "vol","génocide", "torture", "mendicité",
                 "esclavage", "génocide", "armes", "attentat", "tuer", "déstabilisation", "insurrection",
-                "combats", "trahison", "terroriste", "harcèlement sexuel", "homophobie", "discrimination",
+                "combats", "trahison", "terroriste", "harcèlement", "homophobie", "discrimination",
                 "crise économique", "révolution", "rébellion", "attaque", "génocide", "belligérant",
-                "hacker", "piratage", "sexisme", "violence domestique", "mutilation", "divorce", "banqueroute",
-                "génocide", "raciste", "meurtrier", "traite humaine", "peur", "angoisse", "survie",
+                "hacker", "piratage", "sexisme", "mutilation", "divorce", "banqueroute",
+                "génocide", "raciste", "meurtrier", "peur", "angoisse", "survie",
                 "génocidaire", "prophétie", "armée", "assassiner", "destruction", "explosion", "fuite",
                 "secte", "dérive sectaire", "terroriser", "armée", "militarisme", "patriote", "bandit",
                 "criminel", "escroquerie", "dictateur", "despote", "monstre", "brutal", "cruel", "boucherie",
-                "guérilla", "bourreau", "domination", "violence physique", "sang", "bataille", "agonie",
+                "guérilla", "bourreau", "domination", "sang", "bataille", "agonie",
                 "anéantir", "sacrifice", "boucherie", "brutalité", "brutaliser", "répression", "violente",
-                "dépression", "obsédé", "stress post-traumatique", "raciste", "terroriste", "expulsion",
+                "dépression", "obsédé", "raciste", "terroriste", "expulsion",
                 "dictature", "négationnisme", "intolérance", "dérives", "répression", "désastre", "catastrophe",
                 // Insultes vulgaires et jurons
                 "salope", "connard", "enfoiré", "batard", "merde", "pute", "enculé",
-                "enculée", "couille", "saloperie", "sale pute", "sale con", "gros con", "fils de pute",
+                "enculée", "couille", "saloperie", "con",
                 "connasse", "clochard", "bordel", "salaud", "putain", "putes", "pédé", "gouine", "enculé",
-                "sucer", "cul", "foutre", "nique", "ta mère", "pute de merde", "casseur",
-                "merdeux", "c'est de la merde", "connasse", "violence verbale", "racaille", "trou du cul", "la merde", "gros"
+                "sucer", "foutre", "nique", "pute ", "casseur",
+                "merdeux", "connasse", "racaille", "cul", "merde", "gros"
         };
 
         // Vérifier si la réponse contient des mots inappropriés
-        for (String word : inappropriateWords) {
-            if (response.toLowerCase().contains(word.toLowerCase())) {
-                // Remplacer ou ignorer la réponse inappropriée et retourner un message par défaut
-                return "Désolé, l'histoire générée ne correspond pas aux critères d'une histoire pour enfants.";
+        for (String mot : motsDuTexte) {
+            for (String word : inappropriateWords) {
+                if (mot.equals(word.toLowerCase())) {  // Comparer le mot entier sans considérer la casse
+                    return "Désolé, l'histoire générée ne correspond pas aux critères d'une histoire pour enfants.";
+                }
             }
         }
         // 2. Limiter la diversité des sujets

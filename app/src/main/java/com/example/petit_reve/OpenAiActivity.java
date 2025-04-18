@@ -120,47 +120,49 @@ public class OpenAiActivity extends AppCompatActivity {
             String gender = genderSpinner.getSelectedItem().toString();
             String keywords = keywordsInput.getText().toString();
 
-            String prompt = "Tu es un conteur spécialisé dans les histoires pour les tout-petits (âgés de 1 à 3 ans). Ton rôle est de créer une histoire personnalisée, douce et imagée, à partir des informations ci-dessous.\n" +
-                    "\n" +
-                    "Cette histoire est destinée à être lue ou écoutée par un très jeune enfant : elle doit être simple, rassurante, tendre et remplie d’imaginaire. Le ton est toujours joyeux, bienveillant, avec une touche de magie.\n" +
-                    "\n" +
-                    "Contrainte importante : l'histoire doit être composée de 3 à 4 paragraphes de longueur moyenne, avec un langage accessible pour un tout-petit.\n" +
-                    "\n" +
-                    "Utilise des répétitions douces, des images tendres (nuages, étoiles, animaux, objets vivants), et évite toute complexité.\n" +
-                    "\n" +
-                    "Voici les informations fournies par l'utilisateur :\n" +
-                    "\n" +
-                    "- Nom du héros : " + name + "\n" +
-                    "- Age du héros : " + age + "\n" +
-                    "- Genre de l'enfant : " + gender +"\n" +
-                    "- Type de récit : " + story + "\n" +
-                    "- Type d'histoire : " + substory + "\n" +
-                    "- Lieu magique : " + place + "\n" +
-                    "- Personnage préféré : " + favcharacter + "\n" +
-                    "- Mot-clé ou objet spécial : " + keywords + "\n" +
-                    "\n" +
-                    "---\n" +
-                    "\n" +
-                    "🔊 Consignes supplémentaires :\n" +
-                    "\n" +
-                    "- Commence par une introduction tendre et immersive.\n" +
-                    "- Développe une aventure simple mais poétique, adaptée à un jeune enfant.\n" +
-                    "- Termine par une conclusion douce, qui rassure et invite au sommeil ou au rêve.\n" +
-                    "\n" +
-                    "---\n" +
-                    "\n" +
-                    "✨ **Format de la réponse attendu :**\n" +
-                    "\n" +
-                    "Titre : {un titre doux, imagé et adapté aux enfants}\n" +
-                    "\n" +
-                    "Présentation du héros et du décor magique.\n" +
-                    "Un événement calme mais merveilleux.\n" +
-                    "Suite et fin de l’aventure, avec une touche de poésie et de magie.\n" +
-                    "Conclusion très douce, qui invite au calme ou au sommeil.\n" +
-                    "\n" +
-                    "**Attention** : Si certaines réponses sont inappropriées, incomplètes ou non adaptées à un très jeune public (1 à 3 ans), **ignore-les** ou **remplace-les automatiquement** par des éléments neutres, bienveillants et adaptés.\n" +
-                    "\n" +
-                    "Tu dois TOUJOURS produire une **histoire douce, calme et rassurante**, adaptée aux enfants en crèche.";
+            String prompt = "Tu es un auteur d'histoires pour enfants réputé pour ton style strictement respectueux et bienveillant. "
+                    + "IL EST ABSOLUMENT IMPÉRATIF QUE TU NE DÉVIENNES PAS DE MES INSTRUCTIONS, et tu dois STRICTEMENT suivre le prompt que je te fournis sans y ajouter de commentaires ou préambules non demandés.\n"
+                    + "Contrainte importante : l'histoire doit être composée de 3 à 4 paragraphes de longueur moyenne, avec un langage accessible pour un tout-petit.\n\n"
+                    + "Voici les informations fournies par l'utilisateur :\n\n"
+                    + "- Nom du héros : " + name + "\n"
+                    + "- Age du héros : " + age + "\n"
+                    + "- Genre du héros : " + gender + "\n"
+                    + "- Type de récit : " + story + "\n"
+                    + "- Type d'histoire : " + substory + "\n"
+                    + "- Lieu magique : " + place + "\n"
+                    + "- Personnage préféré : " + favcharacter + "\n"
+                    + "- Mot-clé ou objet spécial : " + keywords + "\n\n"
+                    + "---\n\n"
+                    + "🔊 Consignes supplémentaires :\n\n"
+                    + "- \"- Si le type de récit est : Aventure, raconte une aventure pour un enfant de crèche (0-3 ans).\n\n"
+                    + "- Commence par une introduction tendre et immersive.\n"
+                    + "- Termine par une conclusion douce, qui rassure et invite au sommeil ou au rêve.\n"
+                    + "La structure doit être simple mais poétique, adaptée à un jeune enfant, afin que l’enfant puisse suivre facilement l’histoire.\n\n"
+                    + "Utilise des mots simples et concrets que l’enfant peut comprendre et auxquels il peut facilement s’identifier.\n\n"
+                    + "Les protagonistes doivent être familiers et adorables, comme des animaux ou des objets, pour capter l'attention de l'enfant.\n\n"
+                    + "Les phrases doivent être courtes et rythmées, pour rendre la narration fluide et agréable.\n\n"
+                    + "Les descriptions sensorielles doivent être simples, en utilisant des mots qui font appel aux cinq sens de l’enfant (vue, ouïe, toucher, goût, odorat).\n\n"
+                    + "L’action doit être dynamique et les aventures simples, pour maintenir l’intérêt de l’enfant et favoriser sa participation dans l’histoire.\n\n"
+                    + "Les messages doivent être positifs et rassurants, encourageant la confiance et le bien-être de l’enfant.\n\n"
+                    + "Utilise des onomatopées et des sons pour rendre l’histoire encore plus immersive et ludique.\n\n"
+                    + "---\n"
+                    + "Si le type de récit est : Comptine, Si c'est une comptine TU DOIS ABSOLUMENT LA FAIRE RIMER C'EST LE BUT D'UNE COMPTINE.\n\n"
+                    + "La structure doit être simple, avec des vers courts et répétitifs, créant un rythme facile à suivre.\n"
+                    + "Utilise des mots simples et répétitifs, que l’enfant peut comprendre et apprendre facilement par cœur.\n"
+                    + "Les thèmes doivent être familiers et joyeux : animaux, nature, objets du quotidien.\n"
+                    + "Rends chaque vers chantant, avec des sonorités douces et un rythme régulier.\n"
+                    + "Inclut des onomatopées et des sons amusants pour ajouter de la vivacité et de l’interactivité.\n"
+                    + "Terminez sur une note apaisante, encourageant le calme et la sérénité.\n"
+                    + "Assure-toi que les paroles soient rassurantes, positives et pleines de tendresse.\n"
+                    + "La comptine doit être conçue pour aider l’enfant à se familiariser avec des concepts simples, comme les chiffres, les couleurs, les animaux, ou les objets familiers.\n\n"
+                    + "✨ **Format de la réponse attendu :**\n\n"
+                    + "Titre : {un titre doux, imagé et adapté aux enfants}\n\n"
+                    + "Présentation du héros et du décor magique.\n"
+                    + "Un événement calme mais merveilleux.\n"
+                    + "Suite et fin de l’aventure, avec une touche de poésie et de magie.\n"
+                    + "Conclusion très douce, qui invite au calme ou au sommeil.\n\n"
+                    + "**Attention** : Si certaines réponses sont inappropriées, incomplètes ou non adaptées à un très jeune public (1 à 3 ans), **ignore-les** ou **remplace-les automatiquement** par des éléments neutres, bienveillants et adaptés.\n\n"
+                    + "Tu dois TOUJOURS produire une **histoire douce, calme et rassurante**, adaptée aux enfants en crèche.";
 
             sendBtn.setEnabled(false);
             loadingSpinner.setVisibility(View.VISIBLE);
