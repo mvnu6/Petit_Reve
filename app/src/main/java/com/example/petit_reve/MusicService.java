@@ -14,7 +14,7 @@ public class MusicService extends Service {
         super.onCreate();
         // Initialisez le MediaPlayer avec une musique par défaut
         mediaPlayer = MediaPlayer.create(this, R.raw.musique_fond);
-        mediaPlayer.setLooping(true);
+        mediaPlayer.setLooping(true); // Répéter la musique
     }
 
     @Override
