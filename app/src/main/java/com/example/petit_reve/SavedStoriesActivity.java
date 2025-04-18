@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.app.AlertDialog;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,10 +40,6 @@ public class SavedStoriesActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         storySelector.setAdapter(adapter);
 
-        // Charger les histoires dans la ListView
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, savedStories);
-        savedStoriesListView.setAdapter(listAdapter);
-
         // Lire l'histoire sélectionnée
         readButton.setOnClickListener(v -> {
             String selectedStory = (String) storySelector.getSelectedItem();
@@ -66,25 +60,6 @@ public class SavedStoriesActivity extends AppCompatActivity {
                 Toast.makeText(SavedStoriesActivity.this, "Veuillez sélectionner une histoire", Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Ajouter le bouton du menu à partir du header inclus
-        ImageButton menuButton = findViewById(R.id.menuButton); // Assurez-vous que l'id correspond à celui du bouton dans activity_header.xml
-
-        // Définir l'action du bouton de menu
-        menuButton.setOnClickListener(v -> {
-            // Afficher le menu
-            MenuActivity.showMenu(SavedStoriesActivity.this, v); // Appel à la méthode showMenu de MenuActivity pour afficher le menu
-        });
-
-        // Ajouter le logo pour redirection vers MainActivity
-        ImageView logoButton = findViewById(R.id.logoImage); // Récupérer l'ID du logo dans le header
-
-        // Définir l'action du logo pour rediriger vers l'activité principale
-        logoButton.setOnClickListener(v -> {
-            // Créer un Intent pour ouvrir l'activité principale (MainActivity)
-            Intent intent = new Intent(SavedStoriesActivity.this, MainActivity.class);
-            startActivity(intent);  // Démarrer l'activité principale
-        });
     }
 
     // Méthode pour charger les histoires enregistrées depuis le stockage interne
@@ -104,9 +79,9 @@ public class SavedStoriesActivity extends AppCompatActivity {
 
     // Afficher les détails d'une histoire lorsqu'elle est sélectionnée
     private void showStoryDetails(String storyTitle) {
-        Intent intent = new Intent(SavedStoriesActivity.this, StoryDetailActivity.class);
-        intent.putExtra("STORY_TITLE", storyTitle);
-        startActivity(intent);
+        Intent intent = new Intent(SavedStoriesActivity.this, StoryActivity.class);
+        intent.putExtra("STORY_TITLE", storyTitle);  // Passage du titre de l'histoire
+        startActivity(intent);  // Lancer StoryActivity
     }
 
     // Afficher un dialogue de confirmation avant de supprimer l'histoire
@@ -136,17 +111,5 @@ public class SavedStoriesActivity extends AppCompatActivity {
                 Toast.makeText(SavedStoriesActivity.this, "Erreur lors de la suppression", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Intent musicIntent = new Intent(this, MusicService.class);
-        startService(musicIntent);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopService(new Intent(this, MusicService.class));
     }
 }
