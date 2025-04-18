@@ -22,7 +22,7 @@ public class StoryActivity extends AppCompatActivity {
 
     private TextView storyTitleTextView;
     private TextView storyContentTextView;
-    private Button backButton;
+    private ImageButton backButton;
     private Button favoriteButton;
     private Button nextButton;
     private Button prevButton;

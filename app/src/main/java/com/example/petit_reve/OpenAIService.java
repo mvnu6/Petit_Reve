@@ -63,10 +63,10 @@ public class OpenAIService {  // Missing class name and incorrect class declarat
                 "dictature", "négationnisme", "intolérance", "dérives", "répression", "désastre", "catastrophe",
                 // Insultes vulgaires et jurons
                 "salope", "connard", "enfoiré", "batard", "merde", "pute", "enculé",
-                "enculée", "couille", "saloperie", "con",
+                "enculée", "couille", "saloperie",
                 "connasse", "clochard", "bordel", "salaud", "putain", "putes", "pédé", "gouine", "enculé",
                 "sucer", "foutre", "nique", "pute ", "casseur",
-                "merdeux", "connasse", "racaille", "cul", "merde", "gros"
+                "merdeux", "connasse", "racaille", "cul", "merde", "gros","bite"
         };
 
         // Vérifier si la réponse contient des mots inappropriés
@@ -78,36 +78,36 @@ public class OpenAIService {  // Missing class name and incorrect class declarat
             }
         }
         // 2. Limiter la diversité des sujets
-        String[] allowedTopics = {"forêt", "animaux", "magie", "amitié", "aventure", "nature", "étoiles", "rêves",
-                "forêt magique", "animaux", "pirates", "merveille", "aventures", "château magique",
-                "trésor", "amitié", "monde magique", "animaux qui parlent",
-                "animaux fantastiques", "oiseaux", "chatons", "chiens", "pays magique", "jardin enchanté",
-                "pays des fées", "papillons", "bonté", "sourires", "ballons", "fleurs", "poules",
-                "grande aventure", "compagnons", "exploration", "petits héros", "voyage magique",
-                "chemin secret", "forêt enchantée", "lune", "arc-en-ciel", "nuages", "ciel étoilé",
-                "saison des fleurs", "animaux du bois", "chanson joyeuse", "feuilles volantes",
-                "parc secret", "jouets vivants", "fête", "doudous", "doudou magique", "village caché",
-                "lutin", "baleine magique", "nuage magique", "poussin", "moutons", "souris", "licorne",
-                "bateau magique", "légendes", "calins", "voiture magique", "le petit train", "arbre enchanté",
-                "plage enchantée", "ciel", "moulin à vent", "éléphants", "beaux rêves", "montagne",
-                "cheval magique", "chaton aventurier", "coeur", "petit dragon", "baleine dans le ciel",
-                "chemin des étoiles", "forêt de bonbons", "animaux qui chantent", "pays des rêves",
-                "magicien gentil", "petite aventure", "monstre gentil", "petit prince", "forêt des songes",
-                "rire", "sourires", "papillon coloré", "bâton magique", "grandes aventures", "animaux du ciel",
-                "poules qui parlent", "aventure de nuit", "pays des rêves", "champ de fleurs", "tapis magique",
-                "voyage au pays des fées"};
-
-
-        boolean containsAllowedTopic = false;
-        for (String topic : allowedTopics) {
-            if (response.toLowerCase().contains(topic.toLowerCase())) { // Added toLowerCase() for topic
-                containsAllowedTopic = true;
-                break;
-            }
-        }
-        if (!containsAllowedTopic) {
-            return "L'histoire ne doit pas traiter de sujets inappropriés. Essayez avec un sujet plus adapté.";
-        }
+//        String[] allowedTopics = {"forêt", "animaux", "magie", "amitié", "aventure", "nature", "étoiles", "rêves",
+//                "forêt magique", "animaux", "pirates", "merveille", "aventures", "château magique",
+//                "trésor", "amitié", "monde magique", "animaux qui parlent",
+//                "animaux fantastiques", "oiseaux", "chatons", "chiens", "pays magique", "jardin enchanté",
+//                "pays des fées", "papillons", "bonté", "sourires", "ballons", "fleurs", "poules",
+//                "grande aventure", "compagnons", "exploration", "petits héros", "voyage magique",
+//                "chemin secret", "forêt enchantée", "lune", "arc-en-ciel", "nuages", "ciel étoilé",
+//                "saison des fleurs", "animaux du bois", "chanson joyeuse", "feuilles volantes",
+//                "parc secret", "jouets vivants", "fête", "doudous", "doudou magique", "village caché",
+//                "lutin", "baleine magique", "nuage magique", "poussin", "moutons", "souris", "licorne",
+//                "bateau magique", "légendes", "calins", "voiture magique", "le petit train", "arbre enchanté",
+//                "plage enchantée", "ciel", "moulin à vent", "éléphants", "beaux rêves", "montagne",
+//                "cheval magique", "chaton aventurier", "coeur", "petit dragon", "baleine dans le ciel",
+//                "chemin des étoiles", "forêt de bonbons", "animaux qui chantent", "pays des rêves",
+//                "magicien gentil", "petite aventure", "monstre gentil", "petit prince", "forêt des songes",
+//                "rire", "sourires", "papillon coloré", "bâton magique", "grandes aventures", "animaux du ciel",
+//                "poules qui parlent", "aventure de nuit", "pays des rêves", "champ de fleurs", "tapis magique",
+//                "voyage au pays des fées"};
+//
+//
+//        boolean containsAllowedTopic = false;
+//        for (String topic : allowedTopics) {
+//            if (response.toLowerCase().contains(topic.toLowerCase())) { // Added toLowerCase() for topic
+//                containsAllowedTopic = true;
+//                break;
+//            }
+//        }
+//        if (!containsAllowedTopic) {
+//            return "L'histoire ne doit pas traiter de sujets inappropriés. Essayez avec un sujet plus adapté.";
+//        }
 
         // 3. Détection de l'humour inapproprié
         String[] inappropriateHumor = { "humour noir", "blague de mauvais goût", "moquerie", "insulte", "sarcasme",

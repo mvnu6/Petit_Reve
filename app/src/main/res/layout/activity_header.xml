@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#A8E6CF"
+    android:background="@drawable/pinkgrad"
     android:padding="16dp">
 
     <!-- Logo de l'application -->
