@@ -149,6 +149,8 @@ public class OpenAiActivity extends AppCompatActivity {
                     "\n" +
                     "---\n" +
                     "\n" +
+                    "Si le type de récit est : Comptine, ignore toutes les histoires et génère uniquement une comptine. Ne tiens pas compte de l'âge. crée une comptine rythmée et chantante pour un enfant de crèche (0-3 ans) voici un exemple Exemple de comptine :\n" +
+                    "Titre : \"Le petit oiseau chante\"\n" +
                     "✨ **Format de la réponse attendu :**\n" +
                     "\n" +
                     "Titre : {un titre doux, imagé et adapté aux enfants}\n" +

@@ -6,7 +6,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/pinkgrad"
         android:layout_height="wrap_content"
+
         android:padding="24dp">
 
         <!-- Inclure le header avec des dimensions explicites -->

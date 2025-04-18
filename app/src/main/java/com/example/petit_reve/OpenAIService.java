@@ -28,70 +28,70 @@ public class OpenAIService {  // Missing class name and incorrect class declarat
     private String filterResponse(String response) {
         // Liste de mots/clés à éviter (NFT, crypto, contenu inapproprié, etc.)
         String[] inappropriateWords = {
-                "NFT", "crypto", "blockchain", "bitcoin", "cryptomonnaie", "adultes", "violence",
+                "NFT", "crypto", "blockchain", "bitcoin", "cryptomonnaie", "violence",
                 "politique", "guerre", "argent", "sexuel", "porno", "adultère", "racisme", "xénophobie",
                 "insultes", "guerre", "terrorisme", "bombe", "arme", "meurtre", "assassinat", "suicide",
                 "drogue", "alcool", "tabac", "prostitution", "drogué", "viol", "agression", "harcèlement",
-                "nazi", "extrême droite", "extrême gauche", "dictature", "corruption", "escroquerie",
+                "nazi", "dictature", "corruption", "escroquerie",
                 "escroc", "vol","génocide", "torture", "mendicité",
                 "esclavage", "génocide", "armes", "attentat", "tuer", "déstabilisation", "insurrection",
-                "combats", "trahison", "terroriste", "harcèlement sexuel", "homophobie", "discrimination",
+                "combats", "trahison", "terroriste", "harcèlement", "homophobie", "discrimination",
                 "crise économique", "révolution", "rébellion", "attaque", "génocide", "belligérant",
-                "hacker", "piratage", "sexisme", "violence domestique", "mutilation", "divorce", "banqueroute",
-                "génocide", "raciste", "meurtrier", "traite humaine", "peur", "angoisse", "survie",
+                "hacker", "piratage", "sexisme", "mutilation", "divorce", "banqueroute",
+                "génocide", "raciste", "meurtrier", "peur", "angoisse", "survie",
                 "génocidaire", "prophétie", "armée", "assassiner", "destruction", "explosion", "fuite",
                 "secte", "dérive sectaire", "terroriser", "armée", "militarisme", "patriote", "bandit",
                 "criminel", "escroquerie", "dictateur", "despote", "monstre", "brutal", "cruel", "boucherie",
-                "guérilla", "bourreau", "domination", "violence physique", "sang", "bataille", "agonie",
+                "guérilla", "bourreau", "domination", "sang", "bataille", "agonie",
                 "anéantir", "sacrifice", "boucherie", "brutalité", "brutaliser", "répression", "violente",
-                "dépression", "obsédé", "stress post-traumatique", "raciste", "terroriste", "expulsion",
+                "dépression", "obsédé", "raciste", "terroriste", "expulsion",
                 "dictature", "négationnisme", "intolérance", "dérives", "répression", "désastre", "catastrophe",
                 // Insultes vulgaires et jurons
                 "salope", "connard", "enfoiré", "batard", "merde", "pute", "enculé",
-                "enculée", "couille", "saloperie", "sale pute", "sale con", "gros con", "fils de pute",
+                "enculée", "couille", "saloperie",
                 "connasse", "clochard", "bordel", "salaud", "putain", "putes", "pédé", "gouine", "enculé",
-                "sucer", "cul", "foutre", "nique", "ta mère", "pute de merde", "casseur",
-                "merdeux", "c'est de la merde", "connasse", "violence verbale", "racaille", "trou du cul", "la merde", "gros"
+                "sucer", "foutre", "nique", "pute ", "casseur",
+                "merdeux", "connasse", "racaille", "cul", "merde", "gros"
         };
 
         // Vérifier si la réponse contient des mots inappropriés
         for (String word : inappropriateWords) {
             if (response.toLowerCase().contains(word.toLowerCase())) {
                 // Remplacer ou ignorer la réponse inappropriée et retourner un message par défaut
-                return "Désolé, l'histoire générée ne correspond pas aux critères d'une histoire pour enfants.";
+                return "Désolé, l'histoire générée ne correspond pas aux critères d'une histoire pour enfants." + "Mot du prompt : " + response.toLowerCase() + "Mot du tableau : " + word.toLowerCase();
             }
         }
         // 2. Limiter la diversité des sujets
-        String[] allowedTopics = {"forêt", "animaux", "magie", "amitié", "aventure", "nature", "étoiles", "rêves",
-                "forêt magique", "animaux", "pirates", "merveille", "aventures", "château magique",
-                "trésor", "amitié", "monde magique", "animaux qui parlent",
-                "animaux fantastiques", "oiseaux", "chatons", "chiens", "pays magique", "jardin enchanté",
-                "pays des fées", "papillons", "bonté", "sourires", "ballons", "fleurs", "poules",
-                "grande aventure", "compagnons", "exploration", "petits héros", "voyage magique",
-                "chemin secret", "forêt enchantée", "lune", "arc-en-ciel", "nuages", "ciel étoilé",
-                "saison des fleurs", "animaux du bois", "chanson joyeuse", "feuilles volantes",
-                "parc secret", "jouets vivants", "fête", "doudous", "doudou magique", "village caché",
-                "lutin", "baleine magique", "nuage magique", "poussin", "moutons", "souris", "licorne",
-                "bateau magique", "légendes", "calins", "voiture magique", "le petit train", "arbre enchanté",
-                "plage enchantée", "ciel", "moulin à vent", "éléphants", "beaux rêves", "montagne",
-                "cheval magique", "chaton aventurier", "coeur", "petit dragon", "baleine dans le ciel",
-                "chemin des étoiles", "forêt de bonbons", "animaux qui chantent", "pays des rêves",
-                "magicien gentil", "petite aventure", "monstre gentil", "petit prince", "forêt des songes",
-                "rire", "sourires", "papillon coloré", "bâton magique", "grandes aventures", "animaux du ciel",
-                "poules qui parlent", "aventure de nuit", "pays des rêves", "champ de fleurs", "tapis magique",
-                "voyage au pays des fées"};
-
-
-        boolean containsAllowedTopic = false;
-        for (String topic : allowedTopics) {
-            if (response.toLowerCase().contains(topic.toLowerCase())) { // Added toLowerCase() for topic
-                containsAllowedTopic = true;
-                break;
-            }
-        }
-        if (!containsAllowedTopic) {
-            return "L'histoire ne doit pas traiter de sujets inappropriés. Essayez avec un sujet plus adapté.";
-        }
+//        String[] allowedTopics = {"forêt", "animaux", "magie", "amitié", "aventure", "nature", "étoiles", "rêves",
+//                "forêt magique", "animaux", "pirates", "merveille", "aventures", "château magique",
+//                "trésor", "amitié", "monde magique", "animaux qui parlent",
+//                "animaux fantastiques", "oiseaux", "chatons", "chiens", "pays magique", "jardin enchanté",
+//                "pays des fées", "papillons", "bonté", "sourires", "ballons", "fleurs", "poules",
+//                "grande aventure", "compagnons", "exploration", "petits héros", "voyage magique",
+//                "chemin secret", "forêt enchantée", "lune", "arc-en-ciel", "nuages", "ciel étoilé",
+//                "saison des fleurs", "animaux du bois", "chanson joyeuse", "feuilles volantes",
+//                "parc secret", "jouets vivants", "fête", "doudous", "doudou magique", "village caché",
+//                "lutin", "baleine magique", "nuage magique", "poussin", "moutons", "souris", "licorne",
+//                "bateau magique", "légendes", "calins", "voiture magique", "le petit train", "arbre enchanté",
+//                "plage enchantée", "ciel", "moulin à vent", "éléphants", "beaux rêves", "montagne",
+//                "cheval magique", "chaton aventurier", "coeur", "petit dragon", "baleine dans le ciel",
+//                "chemin des étoiles", "forêt de bonbons", "animaux qui chantent", "pays des rêves",
+//                "magicien gentil", "petite aventure", "monstre gentil", "petit prince", "forêt des songes",
+//                "rire", "sourires", "papillon coloré", "bâton magique", "grandes aventures", "animaux du ciel",
+//                "poules qui parlent", "aventure de nuit", "pays des rêves", "champ de fleurs", "tapis magique",
+//                "voyage au pays des fées"};
+//
+//
+//        boolean containsAllowedTopic = false;
+//        for (String topic : allowedTopics) {
+//            if (response.toLowerCase().contains(topic.toLowerCase())) { // Added toLowerCase() for topic
+//                containsAllowedTopic = true;
+//                break;
+//            }
+//        }
+//        if (!containsAllowedTopic) {
+//            return "L'histoire ne doit pas traiter de sujets inappropriés. Essayez avec un sujet plus adapté.";
+//        }
 
         // 3. Détection de l'humour inapproprié
         String[] inappropriateHumor = { "humour noir", "blague de mauvais goût", "moquerie", "insulte", "sarcasme",

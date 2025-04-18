@@ -22,8 +22,8 @@
     <ImageView
         android:id="@+id/story_image"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
         android:contentDescription="Image d'illustration pour l'histoire"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
