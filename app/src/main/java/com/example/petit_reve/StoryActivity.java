@@ -13,8 +13,11 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -47,7 +50,9 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
         ImageView logoButton = findViewById(R.id.logoImage);  // Récupérer l'ID du logo dans le header
+
         // Initialiser les vues
         storyTitleTextView = findViewById(R.id.story_title);
         storyContentTextView = findViewById(R.id.story_content);
@@ -62,40 +67,23 @@ public class StoryActivity extends AppCompatActivity {
         prevButton.setEnabled(false);
 
         // Ajouter le bouton du menu à partir du header inclus
-        ImageButton menuButton = findViewById(R.id.menuButton); // Assurez-vous que l'id correspond à celui du bouton dans activity_header.xml
+        ImageButton menuButton = findViewById(R.id.menuButton);
 
         // Définir l'action du bouton de menu
         menuButton.setOnClickListener(v -> {
             // Afficher le menu
-            MenuActivity.showMenu(StoryActivity.this, v); // Appel à la méthode showMenu de MenuActivity pour afficher le menu
+            MenuActivity.showMenu(StoryActivity.this, v);
         });
 
-        // Récupérer l'histoire de l'intent
-        String storyText = getIntent().getStringExtra("STORY");
-
-        if (storyText == null || storyText.isEmpty()) {
-            Toast.makeText(this, "L'histoire est vide ou n'a pas été transmise correctement.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String[] storyParts = extractTitleAndContent(storyText);
-        String title = storyParts[0];
-        String content = storyParts[1];
-
-        // Afficher le titre et le contenu
-        storyTitleTextView.setText(title);
-        storyParagraphs = content.split("\n\n");  // Diviser en paragraphes
-
-        // Affichage du texte de manière progressive
-        displayTextProgressively(storyParagraphs[currentParagraphIndex]);
-
-        // Configurer les boutons
+        // Configuration des autres boutons
         backButton.setOnClickListener(v -> finish());  // Retourner à l'activité précédente
+
         logoButton.setOnClickListener(v -> {
             // Créer un Intent pour ouvrir l'activité principale (MainActivity)
             Intent intent = new Intent(StoryActivity.this, MainActivity.class);
             startActivity(intent);  // Démarrer l'activité principale
         });
+
         nextButton.setOnClickListener(v -> {
             if (currentParagraphIndex < storyParagraphs.length - 1) {
                 currentParagraphIndex++;
@@ -123,9 +111,77 @@ public class StoryActivity extends AppCompatActivity {
         // Logique pour le bouton de sauvegarde
         saveButton.setOnClickListener(v -> {
             String titleToSave = storyTitleTextView.getText().toString();
-            String contentToSave = storyContentTextView.getText().toString();
+            String contentToSave = combineAllParagraphs(); // Ajout d'une méthode pour combiner tous les paragraphes
             saveStoryLocally(titleToSave, contentToSave);
         });
+
+        // Récupérer les données de l'intent
+        String storyText = getIntent().getStringExtra("STORY");
+        String storyTitle = getIntent().getStringExtra("STORY_TITLE");
+
+        if (storyTitle != null && !storyTitle.isEmpty()) {
+            // Si on a reçu un titre d'histoire, charger depuis le fichier
+            loadStoryFromFile(storyTitle);
+        } else if (storyText != null && !storyText.isEmpty()) {
+            // Si on a reçu un contenu d'histoire, l'afficher directement
+            String[] storyParts = extractTitleAndContent(storyText);
+            String title = storyParts[0];
+            String content = storyParts[1];
+
+            // Afficher le titre et le contenu
+            storyTitleTextView.setText(title);
+            storyParagraphs = content.split("\n\n");
+
+            // Affichage du texte de manière progressive
+            displayTextProgressively(storyParagraphs[currentParagraphIndex]);
+        } else {
+            Toast.makeText(this, "L'histoire est vide ou n'a pas été transmise correctement.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Méthode pour charger une histoire à partir d'un fichier
+     */
+    private void loadStoryFromFile(String storyTitle) {
+        try {
+            FileInputStream fis = openFileInput(storyTitle + ".txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            fis.close();
+
+            // Afficher l'histoire chargée
+            String[] storyParts = extractTitleAndContent(sb.toString());
+            storyTitleTextView.setText(storyParts[0]);
+            storyParagraphs = storyParts[1].split("\n\n");
+
+            if (storyParagraphs.length > 0) {
+                displayTextProgressively(storyParagraphs[currentParagraphIndex]);
+            } else {
+                Toast.makeText(this, "L'histoire ne contient pas de paragraphes.", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur lors du chargement de l'histoire", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Méthode pour combiner tous les paragraphes en un seul texte
+     */
+    private String combineAllParagraphs() {
+        StringBuilder allContent = new StringBuilder();
+        for (String paragraph : storyParagraphs) {
+            allContent.append(paragraph).append("\n\n");
+        }
+        return allContent.toString().trim();
     }
 
     private void displayTextProgressively(String paragraph) {
@@ -165,8 +221,10 @@ public class StoryActivity extends AppCompatActivity {
             setImage(randomImageName);
         }
 
-        // Sauvegarder le texte affiché
-        displayedTexts.add(finalText);
+        // Sauvegarder le texte affiché si ce n'est pas déjà fait
+        if (currentParagraphIndex >= displayedTexts.size()) {
+            displayedTexts.add(finalText);
+        }
     }
 
     private void setImage(String imageName) {
@@ -225,12 +283,17 @@ public class StoryActivity extends AppCompatActivity {
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'histoire", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Récupérer la variable "story" depuis l'intent
+        // Utiliser un type par défaut si rien n'est spécifié
         String storyType = getIntent().getStringExtra("STORY_TYPE");
+        if (storyType == null) {
+            storyType = "Comptine"; // Type par défaut
+        }
+
         Log.d("StoryActivity", "Valeur de storyType : " + storyType);
 
         // Définir les tableaux de musiques

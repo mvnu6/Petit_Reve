@@ -10,10 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.app.AlertDialog;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class SavedStoriesActivity extends AppCompatActivity {
@@ -31,6 +36,20 @@ public class SavedStoriesActivity extends AppCompatActivity {
         storySelector = findViewById(R.id.story_selector);
         readButton = findViewById(R.id.read_button);
         deleteButton = findViewById(R.id.delete_button);
+
+        // Configuration du bouton retour s'il existe
+        ImageButton backButton = findViewById(R.id.back_button);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
+
+        // Configuration du bouton menu s'il existe
+        ImageButton menuButton = findViewById(R.id.menuButton);
+        if (menuButton != null) {
+            menuButton.setOnClickListener(v -> {
+                MenuActivity.showMenu(SavedStoriesActivity.this, v);
+            });
+        }
 
         // Charger les histoires enregistrées
         ArrayList<String> savedStories = loadSavedStories();
@@ -79,9 +98,52 @@ public class SavedStoriesActivity extends AppCompatActivity {
 
     // Afficher les détails d'une histoire lorsqu'elle est sélectionnée
     private void showStoryDetails(String storyTitle) {
+        // Nouvelle approche : lire le contenu du fichier et le passer directement
+        String storyContent = readStoryContent(storyTitle);
+
         Intent intent = new Intent(SavedStoriesActivity.this, StoryActivity.class);
         intent.putExtra("STORY_TITLE", storyTitle);  // Passage du titre de l'histoire
+        // Facultatif : déterminer le type d'histoire pour la musique
+        intent.putExtra("STORY_TYPE", determineStoryType(storyContent));
+
         startActivity(intent);  // Lancer StoryActivity
+    }
+
+    // Méthode pour lire le contenu d'une histoire
+    private String readStoryContent(String storyTitle) {
+        StringBuilder content = new StringBuilder();
+        try {
+            FileInputStream fis = openFileInput(storyTitle + ".txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur lors de la lecture du fichier", Toast.LENGTH_SHORT).show();
+        }
+        return content.toString();
+    }
+
+    // Méthode pour déterminer le type d'histoire (pour la musique)
+    private String determineStoryType(String content) {
+        // Simple heuristique : si le contenu contient des mots liés à l'aventure
+        String lowerContent = content.toLowerCase();
+        if (lowerContent.contains("aventure") ||
+                lowerContent.contains("pirate") ||
+                lowerContent.contains("héros") ||
+                lowerContent.contains("hero") ||
+                lowerContent.contains("dragon") ||
+                lowerContent.contains("chevalier")) {
+            return "Aventure";
+        } else {
+            return "Comptine";
+        }
     }
 
     // Afficher un dialogue de confirmation avant de supprimer l'histoire
